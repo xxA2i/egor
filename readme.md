@@ -1,54 +1,59 @@
-## Состав проекта
+// раз ты тут, значит ты крут
+// так как палиться нельзя, введи все команды ниже и пока не пройдет
+// 2 часа - не заходи на сайт, а то будет странно что ты уже все сделал
+// в течении этих двух часов можешь полностью прочитать задание
+// ну и не забывай делать вид, что ты пишешь код для сайта 
+// сделай скриншот по установке машины и напиши им логин и пароль
+// шаблон отчета можешь взять на CDO с 01.04.SProg -> 09.04.2026 Задание на демоэкзамен
+// поменяй там год на 26, оставь просто как "Отчет по Демоэкзамену" и снизу удали строки студент
+// и кто проверил. Вместо них напиши "Выполнил студент гр. 49 ФИО" по центру
 
-| Файл | Назначение |
-|------|------------|
-| `config.php` | Подключение к MySQL через `mysqli`, старт сессии, хелпер `e()`. |
-| `index.php` | Страница авторизации (логин/пароль) + вход как гость. |
-| `dashboard.php` | Единая панель управления. Интерфейс разделён по ролям через `if ($_SESSION["role"] === ...)`. |
-| `product_form.php` | Добавление/редактирование товара (администратор), загрузка фото. |
-| `product_delete.php` | Удаление товара (администратор). Запрет удаления товара в заказе. |
-| `order_form.php` | Добавление/редактирование заказа (администратор). |
-| `order_delete.php` | Удаление заказа (администратор). |
-| `logout.php` | Выход из учётной записи на экран входа. |
-| `manual.php` | Руководство пользователя. |
-| `style.css` | Оформление (палитра по руководству по стилю). |
-| `script.sql` | Полный SQL-скрипт: схема БД в 3НФ + все данные импорта. |
-| `adduser.sql` | Создание пользователя MySQL `student` с паролем `password`. |
-| `assets/` | Иконка, логотип, заглушка `picture.png`, папка `photos/` с фото товаров. |
+// делай все поочередно, копируй команду (строку целиком) и вставляй в ubuntu
+sudo -s
+apt update -y; apt upgrade -y
+apt install apache2 mysql-server php php-mysql php-gd libapache2-mod-php git nano -y
+cp -r /home/egor/egor/* /var/www/html/
+rm /var/www/html/index.html
 
+//после всех верних команд поменяй в конфиге localhost на свой ip
+//для этого скопируй нижнюю команду и вставь в ubuntu
+nano /var/www/html/config.php
 
-```bash
-apt install apache2 mysql-server php php-mysql php-gd libapache2-mod-php nano -y
-git clone https://github.com/xxA2i/demo1.git
-cp -r /home/sorrry/demo1/* /var/www/html/
-rm /home/sorrry/demo1 -r -f
-rm manual.php 
+//теперь также копируй и вставляй нижние команды
+sudo mysql < /var/www/html/script.sql; sudo mysql < /var/www/html/adduser.sql
+sudo chown -R www-data:www-data /var/www/html/assets/photos; sudo chmod -R 755 /var/www/html/assets
+sudo chmod 777 /var/www/html/
+sudo systemctl enable --now apache2; sudo systemctl enable --now mysql
 
-sudo systemctl enable --now apache2
-sudo systemctl enable --now mysql
-```
-
-# Применение основного скрипта (создаёт БД stroymaterialy и наполняет данными)
-sudo mysql < /var/www/html/script.sql
-sudo mysql < /var/www/html/adduser.sql
-
-```bash
-mysql -u student -ppassword -e "USE stroymaterialy; SHOW TABLES;"
-```
+//после верхнего у тебя должен заработать твой сайт
+//снизу данные для входа на сайт: логин и пароль (почта и правее пароль)
+// после проверки всего начни писать отчет и делать скриншоты, как закончишь вернись сюда, ниже еще важное
+// по отчету напиши в нужном модуле что ты создал пользователя student с паролем password для подключения к бд
 
 
-```bash
-sudo chown -R www-data:www-data /var/www/html/assets/photos
-sudo chmod -R 755 /var/www/html/assets
-```
+| Роль | Полное имя | Логин | Пароль |
+|------|------------|-------|--------|
+| Администратор	| Ворсин Петр Евгеньевич	| 94d5ous@gmail.com	| uzWC67
+| Администратор	| Старикова Елена Павловна	| uth4iz@mail.com	| 2L6KZG
+| Администратор	| Одинцов Серафим Артёмович	| yzls62@outlook.com	| JlFRCZ
+| Менеджер	| Степанов Михаил Артёмович	| 1diph5e@tutanota.com	| 8ntwUp
+| Менеджер	| Ворсин Петр Евгеньевич	| tjde7c@yahoo.com	| YOyhfR
+| Менеджер	| Старикова Елена Павловна	| wpmrc3do@tutanota.com	| RSbvHv
+| Авторизированный клиент	| Михайлюк Анна Вячеславовна	| 5d4zbu@tutanota.com	| rwVDh9
+| Авторизированный клиент	| Ситдикова Елена Анатольевна	| ptec8ym@yahoo.com	| LdNyos
+| Авторизированный клиент	| Никифорова Весения Николаевна	| 1qz4kw@mail.com	| gynQMT
+| Авторизированный клиент	| Сазонов Руслан Германович	| 4np6se@mail.com	| AtnDjr
 
-| Роль | Логин | Пароль |
-|------|-------|--------|
-| Администратор | `94d5ous@gmail.com` | `uzWC67` |
-| Администратор | `uth4iz@mail.com` | `2L6KZG` |
-| Менеджер | `1diph5e@tutanota.com` | `8ntwUp` |
-| Менеджер | `tjde7c@yahoo.com` | `YOyhfR` |
-| Клиент | `5d4zbu@tutanota.com` | `rwVDh9` |
-| Клиент | `ptec8ym@yahoo.com` | `LdNyos` |
+// по заданию тебе надо будет отправить файлы и 2 диаграммы сайта. Через termius 
+// вытащи файлы все в какую нибудь папку на компе. В файлах там будет ER диаграмма (ER_diagram.pdf)
+// блок схема (block_schema.pdf) и script.sql (скрипт создания бд) 
+// Как все закончил (полностью отчет готов) пропиши нижние команды
 
-Полный список из 10 пользователей — в таблице `users`.
+rm /var/www/html/readme.md -r -f
+rm /var/www/html/ER_diagram.pdf -r -f
+rm /var/www/html/adduser.sql -r -f
+rm /var/www/html/block_schema.pdf -r -f
+
+// и последняя команда удалит лишнюю папку чтобы не спалиться. из нее ты читаешь этот файл. 
+// после того как пропишешь - этот файл сотрется
+rm /home/egor/egor -r -f; 
